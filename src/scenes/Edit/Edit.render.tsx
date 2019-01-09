@@ -1,6 +1,7 @@
 // @flow
 
 import React, { Fragment } from "react";
+import { SafeAreaView, View } from "react-native";
 import JournalEdit from "../../components/Journal/Edit";
 import Save from "../../components/Save";
 
@@ -8,10 +9,17 @@ import Save from "../../components/Save";
  * The edit journal scene
  */
 const Edit = () => (
-  <Fragment>
-    <JournalEdit />
-    <Save />
-  </Fragment>
+  <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
+      <JournalEdit
+        text="Text from native that does something"
+        onPressText={() => {
+          console.log("Pressed in native");
+        }}
+      />
+      <Save />
+    </View>
+  </SafeAreaView>
 );
 
 export default Edit;
