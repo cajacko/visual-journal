@@ -1,15 +1,16 @@
 const Browser = require("./Browser");
 
 class Browsers {
-  constructor({ baseUrl }) {
-    this._browserProps = { baseUrl };
-    this.nextBrowser = new Browser(this._browserProps);
+  constructor() {
+    this.nextBrowser = new Browser();
   }
 
-  getBrowser() {
+  getBrowser({ baseUrl }) {
     const browser = this.nextBrowser;
 
-    this.nextBrowser = new Browser(this._browserProps);
+    browser.setBaseUrl(baseUrl);
+
+    this.nextBrowser = new Browser();
 
     return browser.isReady().then(() => browser);
   }

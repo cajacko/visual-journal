@@ -1,8 +1,7 @@
 const puppeteer = require("puppeteer");
 
 class Browser {
-  constructor({ baseUrl }) {
-    this._baseUrl = baseUrl;
+  constructor() {
     this._browser = null;
     this._page = null;
 
@@ -13,6 +12,10 @@ class Browser {
         this._page = page;
       });
     });
+  }
+
+  setBaseUrl(baseUrl) {
+    this._baseUrl = baseUrl;
   }
 
   isReady() {

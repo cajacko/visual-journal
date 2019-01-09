@@ -8,13 +8,13 @@ import Save from "../../components/Save";
 /**
  * The edit journal scene
  */
-const Edit = () => (
+const Edit = ({ text, location, dateString }) => (
   <SafeAreaView style={{ flex: 1 }}>
     <View style={{ flex: 1 }}>
       <JournalEdit
-        text="Text from native that does something"
-        location="London"
-        dateString="Mon 3rd Jun 2019"
+        text={text}
+        location={location}
+        dateString={dateString}
         onPressText={() => {
           console.log("Pressed in native");
         }}
@@ -22,13 +22,21 @@ const Edit = () => (
       <View style={{ marginTop: 20, alignItems: "center" }}>
         <Save
           onPress={() => {
-            console.log("save");
-
-            CameraRoll.saveToCameraRoll("https://dummyimage.com/300").then(
-              data => {
-                console.log("saved", data);
-              }
-            );
+            fetch("http://localhost:3000/getImageURL", {
+              method: "post",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                text,
+                location,
+                date: dateString
+              })
+            })
+              .then(res => res.json())
+              .then(({ imageURL }) =>
+                CameraRoll.saveToCameraRoll(imageURL, "photo")
+              );
           }}
         />
       </View>

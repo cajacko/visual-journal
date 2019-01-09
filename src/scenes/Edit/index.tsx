@@ -1,1 +1,1 @@
-export { default } from "./Edit.render";
+export { default } from "./Edit.component";

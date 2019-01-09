@@ -2,12 +2,12 @@ const buildHtml = require("../../common/web/index");
 const Browsers = require("../modules/Browsers");
 const TempFile = require("../modules/TempFile");
 
-const browsers = new Browsers({ baseUrl: "http://localhost:3000" });
+const browsers = new Browsers();
 
-module.exports = ({ fs, tmpDir }) => props => {
+module.exports = ({ fs, tmpDir, baseUrl }) => props => {
   const tempFile = new TempFile({ fs, tmpDir });
 
-  return browsers.getBrowser().then(browser => {
+  return browsers.getBrowser({ baseUrl }).then(browser => {
     const html = buildHtml(props);
 
     const close = () => Promise.all([tempFile.remove(), browser.close()]);
