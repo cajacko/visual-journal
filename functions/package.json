@@ -15,7 +15,7 @@
     "build": "cp functions/index.js ./functions-dist",
     "start": "concurrently \"yarn start:serve\" \"yarn start:common\"",
     "start:common": "babel ../src/common --out-dir functions/common --watch",
-    "start:serve": "nodemon functions/emulator.js",
+    "start:serve": "nodemon ./functions/emulator.js",
     "deploy": "yarn lint && yarn build && firebase deploy",
     "lint": "([ \"$CI\" = true ] && eslint --quiet -f codeframe . || eslint .)"
   },

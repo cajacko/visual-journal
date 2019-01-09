@@ -12,10 +12,13 @@
     "node": "8"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "firebase-admin": "^5.13.1",
     "firebase-functions": "^2.0.2",
-    "puppeteer": "^1.6.2"
+    "fs-extra": "^7.0.1",
+    "puppeteer": "^1.6.2",
+    "uuid": "^3.3.2"
   },
   "private": true
 }

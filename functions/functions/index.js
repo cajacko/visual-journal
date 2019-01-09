@@ -1,4 +1,6 @@
 var functions = require("firebase-functions");
-const entry = require("./src/entry");
+const routes = require("./src/routes");
 
-exports.getJournalPhoto = functions.https.onRequest(entry);
+routes.forEach(route => {
+  exports[route[0]] = functions.https.onRequest(route[1]);
+});
