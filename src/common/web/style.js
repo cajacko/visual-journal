@@ -1,4 +1,4 @@
-const baseSize = "30px";
+const baseSize = "8vh";
 const sidePadding = "0.5rem;";
 
 module.exports = `
