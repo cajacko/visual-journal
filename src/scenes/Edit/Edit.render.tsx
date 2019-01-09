@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Fragment } from "react";
-import { SafeAreaView, View } from "react-native";
+import { SafeAreaView, View, CameraRoll } from "react-native";
 import JournalEdit from "../../components/Journal/Edit";
 import Save from "../../components/Save";
 
@@ -19,7 +19,19 @@ const Edit = () => (
           console.log("Pressed in native");
         }}
       />
-      <Save />
+      <View style={{ marginTop: 20, alignItems: "center" }}>
+        <Save
+          onPress={() => {
+            console.log("save");
+
+            CameraRoll.saveToCameraRoll("https://dummyimage.com/300").then(
+              data => {
+                console.log("saved", data);
+              }
+            );
+          }}
+        />
+      </View>
     </View>
   </SafeAreaView>
 );
