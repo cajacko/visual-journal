@@ -3,7 +3,8 @@
 import React from "react";
 import { WebView } from "react-native";
 import Square from "../../Layout/Square";
-import web from "../../../web";
+
+const web = require("../../../common/web");
 
 interface Props {
   text?: string;

@@ -1,7 +1,7 @@
 const baseSize = "30px";
 const sidePadding = "0.5rem;";
 
-export default `
+module.exports = `
   html {
     font-size: ${baseSize};
     font-family: helvetica, sans-serif;
