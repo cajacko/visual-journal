@@ -14,7 +14,7 @@
     "postbuildnode6": "rimraf ./functions-dist/node_modules && cp -R ./functions/node_modules ./functions-dist",
     "build": "cp functions/index.js ./functions-dist",
     "start": "concurrently \"yarn start:serve\" \"yarn start:common\"",
-    "start:common": "babel ../src/common --out-dir functions/common --watch",
+    "start:common": "babel --no-babelrc ../src/common --out-dir functions/common --watch -q",
     "start:serve": "nodemon ./functions/emulator.js",
     "deploy": "yarn lint && yarn build && firebase deploy",
     "lint": "([ \"$CI\" = true ] && eslint --quiet -f codeframe . || eslint .)"
