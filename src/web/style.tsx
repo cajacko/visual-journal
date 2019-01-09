@@ -1,8 +1,11 @@
+const baseSize = "30px";
+const sidePadding = "0.5rem;";
+
 export default `
   html {
-    font-size: 30px;
+    font-size: ${baseSize};
     font-family: helvetica, sans-serif;
-    background-color: white;
+    background-color: #f5f5f5;
     line-height: 1.5;
   }
 
@@ -16,7 +19,33 @@ export default `
     flex-direction: column;
   }
 
+  .Main {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+  }
+
   .Text {
-    padding: 1rem 0;
+    padding: 1rem ${sidePadding};
+    margin: 0;
+    display: block;
+  }
+
+  .Footer {
+    display: flex;
+    background-color: #0d47a1;
+  }
+
+  .Location, .Date {
+    display: flex;
+    font-size: 0.5rem;
+    color: white;
+    padding: 0.5rem ${sidePadding};
+    line-height: 1;
+  }
+
+  .Location {
+    flex: 1;
   }
 `;

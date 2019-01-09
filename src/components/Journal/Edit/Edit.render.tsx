@@ -7,13 +7,15 @@ import web from "../../../web";
 
 interface Props {
   text?: string;
+  dateString?: string;
+  location?: string;
   onPressText: () => void;
 }
 
 /**
  * The Edit Journal component
  */
-const Edit = ({ text, ...props }: Props) => (
+const Edit = ({ text, dateString, location, ...props }: Props) => (
   <Square>
     <WebView
       onMessage={e => {
@@ -34,7 +36,7 @@ const Edit = ({ text, ...props }: Props) => (
         }
       }}
       source={{
-        html: web({ text })
+        html: web({ text, dateString, location })
       }}
       style={{
         flex: 1
