@@ -9,6 +9,7 @@ import TextArea from "../../components/Modal/TextArea";
 interface Props {}
 
 type Func = () => void;
+type OnSubmitModal = (text: string) => void;
 
 interface State {
   text: string | null;
@@ -18,7 +19,7 @@ interface State {
   saveError: string | null;
   modalInitValue: any;
   onCloseModal: null | Func;
-  onSubmitModal: null | Func;
+  onSubmitModal: null | OnSubmitModal;
   ModalComponent: null | React.SFC<{
     onSubmit?: null | Func;
     onClose?: null | Func;
@@ -75,13 +76,15 @@ class Edit extends Component<Props, State> {
       });
   };
 
-  setTextAreaModal = stateKey => () => {
-    this.setState({
+  setTextAreaModal = (stateKey: "text" | "dateString" | "location") => () => {
+    const newState = {
       ModalComponent: TextArea,
       modalInitValue: this.state[stateKey],
-      onSubmitModal: val => this.resetModal({ [stateKey]: val }),
+      onSubmitModal: (val: string) => this.resetModal({ [stateKey]: val }),
       onCloseModal: () => this.resetModal()
-    });
+    };
+
+    this.setState(newState);
   };
 
   onPressText = this.setTextAreaModal("text");
@@ -95,13 +98,16 @@ class Edit extends Component<Props, State> {
       location?: string;
     } = {}
   ) => {
-    this.setState({
+    let newState = {
       ModalComponent: null,
       modalInitValue: null,
       onSubmitModal: null,
-      onCloseModal: null,
-      ...additionalState
-    });
+      onCloseModal: null
+    };
+
+    newState = { ...newState, ...additionalState };
+
+    this.setState(newState);
   };
 
   render() {

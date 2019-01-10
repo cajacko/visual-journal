@@ -5,8 +5,10 @@ import { SafeAreaView, View, Text } from "react-native";
 import JournalEdit from "../../components/Journal/Edit";
 import Save from "../../components/Save";
 import Modal from "../../components/Modal/Container";
+import TabNav from "../../components/TabNav";
 
 type Func = () => void;
+type OnSubmitModal = (text: string) => void;
 
 interface Props {
   text: string;
@@ -18,59 +20,55 @@ interface Props {
   onPressText: () => void;
   onPressDate: () => void;
   onPressLocation: () => void;
-  onSubmitModal: Func | null;
-  onCloseModal: Func | null;
+  onSubmitModal: OnSubmitModal;
+  onCloseModal: Func;
   modalInitValue?: any;
   ModalComponent?: null | React.SFC<{
-    onSubmit?: Func | null;
-    onClose?: Func | null;
-    initValue?: any;
+    onSubmit: OnSubmitModal;
+    onClose: Func;
+    initValue: any;
   }>;
 }
 
 /**
  * The edit journal scene
  */
-const Edit = ({
-  text,
-  location,
-  dateString,
-  onSave,
-  saving,
-  saveError,
-  onPressText,
-  ModalComponent,
-  onSubmitModal,
-  onCloseModal,
-  modalInitValue,
-  onPressDate,
-  onPressLocation
-}: Props) => (
+const Edit = ({ ModalComponent, ...props }: Props) => (
   <SafeAreaView style={{ flex: 1 }}>
     <Modal
       ModalContent={
         ModalComponent && (
           <ModalComponent
-            onSubmit={onSubmitModal}
-            onClose={onCloseModal}
-            initValue={modalInitValue}
+            onSubmit={props.onSubmitModal}
+            onClose={props.onCloseModal}
+            initValue={props.modalInitValue}
           />
         )
       }
     >
       <View style={{ flex: 1 }}>
         <JournalEdit
-          text={text}
-          location={location}
-          dateString={dateString}
-          onPressText={onPressText}
-          onPressLocation={onPressLocation}
-          onPressDate={onPressDate}
+          text={props.text}
+          location={props.location}
+          dateString={props.dateString}
+          onPressText={props.onPressText}
+          onPressLocation={props.onPressLocation}
+          onPressDate={props.onPressDate}
+        />
+        <TabNav
+          items={[
+            { key: "text", text: "T", action: props.onPressText },
+            { key: "date", text: "D", action: props.onPressDate },
+            { key: "location", text: "L", action: props.onPressLocation },
+            { key: "icons", text: "I", action: props.onPressLocation },
+            { key: "theme", text: "T", action: props.onPressLocation },
+            { key: "photos", text: "P", action: props.onPressLocation }
+          ]}
         />
         <View style={{ marginTop: 20, alignItems: "center" }}>
-          {saving ? <Text>Saving</Text> : <Save onPress={onSave} />}
+          {props.saving ? <Text>Saving</Text> : <Save onPress={props.onSave} />}
 
-          {saveError && <Text>{saveError}</Text>}
+          {props.saveError && <Text>{props.saveError}</Text>}
         </View>
       </View>
     </Modal>

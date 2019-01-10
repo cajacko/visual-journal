@@ -6,13 +6,16 @@ import Square from "../../Layout/Square";
 
 const web = require("../../../common/web");
 
-interface Props {
+interface Funcs {
+  onPressText: (payload: any) => void;
+  onPressLocation: (payload: any) => void;
+  onPressDate: (payload: any) => void;
+}
+
+interface Props extends Funcs {
   text?: string;
   dateString?: string;
   location?: string;
-  onPressText: () => void;
-  onPressLocation: () => void;
-  onPressDate: () => void;
 }
 
 /**
@@ -27,12 +30,15 @@ const Edit = ({ text, dateString, location, ...props }: Props) => (
         if (!data) return;
 
         try {
-          const { type, payload }: { type: string; payload?: any } = JSON.parse(
-            data
-          );
+          const {
+            type,
+            payload
+          }: { type: keyof Funcs; payload?: any } = JSON.parse(data);
 
-          if (typeof props[type] === "function") {
-            props[type](payload);
+          const func = props[type];
+
+          if (typeof func === "function") {
+            func(payload);
           }
         } catch (e) {
           return;
