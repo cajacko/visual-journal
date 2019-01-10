@@ -10,12 +10,12 @@ module.exports = function(style, script) {
         <script>${script || ""}</script>
       </head>
       <body>
-        <main class="Main">
-            <p onclick="window.onAction('onPressText')" class="Text"><%= text %></p>
+        <main class="Main" onclick="window.onAction('onPressText')" >
+            <p class="Text"><%= text %></p>
         </main>
         <footer class="Footer">
-          <span class="Location"><%= location %></span>
-          <span class="Date"><%= dateString %></span>
+          <span class="Location" onclick="window.onAction('onPressLocation')" ><%= location %></span>
+          <span class="Date" onclick="window.onAction('onPressDate')" ><%= dateString %></span>
         </footer>
       </body>
     </html>

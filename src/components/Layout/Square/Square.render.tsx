@@ -3,7 +3,9 @@
 import React from "react";
 import { View } from "react-native";
 
-interface Props {}
+interface Props {
+  children: JSX.Element;
+}
 
 /**
  * Render content in a square

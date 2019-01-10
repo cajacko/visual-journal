@@ -4,14 +4,26 @@ import React, { Component } from "react";
 import { CameraRoll } from "react-native";
 import EditRender from "./Edit.render";
 import { API } from "../../config/urls";
+import TextArea from "../../components/Modal/TextArea";
 
 interface Props {}
+
+type Func = () => void;
+
 interface State {
-  text: string;
+  text: string | null;
   location: string;
   dateString: string;
   saving: boolean;
   saveError: string | null;
+  modalInitValue: any;
+  onCloseModal: null | Func;
+  onSubmitModal: null | Func;
+  ModalComponent: null | React.SFC<{
+    onSubmit?: null | Func;
+    onClose?: null | Func;
+    initValue?: any;
+  }>;
 }
 
 /**
@@ -26,7 +38,11 @@ class Edit extends Component<Props, State> {
       location: "London",
       dateString: "Mon 3rd Jun 2019",
       saving: false,
-      saveError: null
+      saveError: null,
+      ModalComponent: null,
+      modalInitValue: null,
+      onSubmitModal: null,
+      onCloseModal: null
     };
   }
 
@@ -59,6 +75,35 @@ class Edit extends Component<Props, State> {
       });
   };
 
+  setTextAreaModal = stateKey => () => {
+    this.setState({
+      ModalComponent: TextArea,
+      modalInitValue: this.state[stateKey],
+      onSubmitModal: val => this.resetModal({ [stateKey]: val }),
+      onCloseModal: () => this.resetModal()
+    });
+  };
+
+  onPressText = this.setTextAreaModal("text");
+  onPressDate = this.setTextAreaModal("dateString");
+  onPressLocation = this.setTextAreaModal("location");
+
+  resetModal = (
+    additionalState: {
+      text?: string;
+      dateString?: string;
+      location?: string;
+    } = {}
+  ) => {
+    this.setState({
+      ModalComponent: null,
+      modalInitValue: null,
+      onSubmitModal: null,
+      onCloseModal: null,
+      ...additionalState
+    });
+  };
+
   render() {
     return (
       <EditRender
@@ -68,6 +113,13 @@ class Edit extends Component<Props, State> {
         onSave={this.onSave}
         saving={this.state.saving}
         saveError={this.state.saveError}
+        onPressText={this.onPressText}
+        onPressDate={this.onPressDate}
+        onPressLocation={this.onPressLocation}
+        onSubmitModal={this.state.onSubmitModal}
+        onCloseModal={this.state.onCloseModal}
+        ModalComponent={this.state.ModalComponent}
+        modalInitValue={this.state.modalInitValue}
       />
     );
   }

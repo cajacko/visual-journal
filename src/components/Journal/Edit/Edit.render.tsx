@@ -11,6 +11,8 @@ interface Props {
   dateString?: string;
   location?: string;
   onPressText: () => void;
+  onPressLocation: () => void;
+  onPressDate: () => void;
 }
 
 /**
