@@ -58,6 +58,7 @@ const Edit = ({ ModalComponent, ...props }: Props) => (
           onSwipeDown={props.onChangeTheme("down")}
           onSwipeRight={props.onChangeTheme("right")}
           onSwipeLeft={props.onChangeTheme("left")}
+          includeArrowButtons={props.settingTheme}
         >
           <JournalEdit
             text={props.text}
