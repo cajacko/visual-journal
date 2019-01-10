@@ -1,14 +1,30 @@
 // @flow
 
 import React, { Fragment } from "react";
-import { SafeAreaView, View, CameraRoll } from "react-native";
+import { SafeAreaView, View, Text } from "react-native";
 import JournalEdit from "../../components/Journal/Edit";
 import Save from "../../components/Save";
+
+interface Props {
+  text: string;
+  location: string;
+  dateString: string;
+  saving: boolean;
+  saveError: string | null;
+  onSave: () => void;
+}
 
 /**
  * The edit journal scene
  */
-const Edit = ({ text, location, dateString }) => (
+const Edit = ({
+  text,
+  location,
+  dateString,
+  onSave,
+  saving,
+  saveError
+}: Props) => (
   <SafeAreaView style={{ flex: 1 }}>
     <View style={{ flex: 1 }}>
       <JournalEdit
@@ -20,25 +36,9 @@ const Edit = ({ text, location, dateString }) => (
         }}
       />
       <View style={{ marginTop: 20, alignItems: "center" }}>
-        <Save
-          onPress={() => {
-            fetch("http://localhost:3000/getImageURL", {
-              method: "post",
-              headers: {
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify({
-                text,
-                location,
-                date: dateString
-              })
-            })
-              .then(res => res.json())
-              .then(({ imageURL }) =>
-                CameraRoll.saveToCameraRoll(imageURL, "photo")
-              );
-          }}
-        />
+        {saving ? <Text>Saving</Text> : <Save onPress={onSave} />}
+
+        {saveError && <Text>{saveError}</Text>}
       </View>
     </View>
   </SafeAreaView>
