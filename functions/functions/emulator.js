@@ -5,9 +5,10 @@ const { join } = require("path");
 const set = require("lodash/set");
 const get = require("lodash/get");
 const unset = require("lodash/unset");
+const tempy = require("tempy");
 const routes = require("./src/routes/index");
 
-const tmpDir = join(__dirname, "../../tmp");
+const tmpDir = tempy.directory();
 
 const app = express();
 const port = 3000;

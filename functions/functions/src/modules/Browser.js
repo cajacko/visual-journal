@@ -5,13 +5,15 @@ class Browser {
     this._browser = null;
     this._page = null;
 
-    this._isReadyPromise = puppeteer.launch().then(browser => {
-      this._browser = browser;
+    this._isReadyPromise = puppeteer
+      .launch({ args: ["--no-sandbox", "--disable-setuid-sandbox"] })
+      .then(browser => {
+        this._browser = browser;
 
-      this._browser.newPage().then(page => {
-        this._page = page;
+        return this._browser.newPage().then(page => {
+          this._page = page;
+        });
       });
-    });
   }
 
   setBaseUrl(baseUrl) {
@@ -32,6 +34,10 @@ class Browser {
     return this._ensurePage().goto(url, {
       waitUntil: "networkidle0"
     });
+  }
+
+  setContent(html) {
+    return this._ensurePage().setContent(html);
   }
 
   getScreenshot() {

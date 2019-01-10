@@ -12,11 +12,13 @@
     "cleanup": "rimraf functions-dist",
     "buildnode6": "babel 'functions' --out-dir 'functions-dist' --presets=es2017 --copy-files --ignore 'node_modules'",
     "postbuildnode6": "rimraf ./functions-dist/node_modules && cp -R ./functions/node_modules ./functions-dist",
-    "build": "cp functions/index.js ./functions-dist",
-    "start": "concurrently \"yarn start:serve\" \"yarn start:common\"",
-    "start:common": "babel --no-babelrc ../src/common --out-dir functions/common --watch -q",
-    "start:serve": "nodemon ./functions/emulator.js",
-    "deploy": "yarn lint && yarn build && firebase deploy",
+    "build": "concurrently \"yarn build:common\"",
+    "build:common": "babel --no-babelrc ../src/common --out-dir functions/common -q",
+    "build:functions": "",
+    "start": "concurrently \"yarn start:functions\" \"yarn start:common\"",
+    "start:common": "yarn build:common --watch",
+    "start:functions": "nodemon ./functions/emulator.js",
+    "deploy": "yarn build && firebase deploy --only functions",
     "lint": "([ \"$CI\" = true ] && eslint --quiet -f codeframe . || eslint .)"
   },
   "dependencies": {
