@@ -3,6 +3,7 @@
 import React, { Component } from "react";
 import { CameraRoll } from "react-native";
 import EditRender from "./Edit.render";
+import { API } from "../../config/urls";
 
 interface Props {}
 interface State {
@@ -21,7 +22,7 @@ class Edit extends Component<Props, State> {
     super(props);
 
     this.state = {
-      text: "Boom time",
+      text: "Yeah",
       location: "London",
       dateString: "Mon 3rd Jun 2019",
       saving: false,
@@ -34,20 +35,17 @@ class Edit extends Component<Props, State> {
 
     this.setState({ saving: true, saveError: null });
 
-    fetch(
-      "https://us-central1-visual-journal-514e4.cloudfunctions.net/getImageURL",
-      {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          text,
-          location,
-          date: dateString
-        })
-      }
-    )
+    fetch(`${API}/getImageURL`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        text,
+        location,
+        date: dateString
+      })
+    })
       .then(res => res.json())
       .then(({ imageURL }) => CameraRoll.saveToCameraRoll(imageURL, "photo"))
       .then(() => {
