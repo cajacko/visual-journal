@@ -1,4 +1,4 @@
-module.exports = `
+module.exports = () => `
   document.addEventListener('DOMContentLoaded', function() {
     function postMessage(type, payload) {
       const message = JSON.stringify({

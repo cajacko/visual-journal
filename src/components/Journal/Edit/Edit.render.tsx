@@ -4,6 +4,7 @@ import React from "react";
 import { WebView } from "react-native";
 import Square from "../../Layout/Square";
 
+const getThemeProps = require("../../../common/utils/getThemeProps");
 const web = require("../../../common/web");
 
 interface Funcs {
@@ -16,15 +17,31 @@ interface Props extends Funcs {
   text?: string;
   dateString?: string;
   location?: string;
+  disableActions?: boolean;
+  theme: string;
+  themeVariant: string | null;
 }
 
 /**
  * The Edit Journal component
  */
-const Edit = ({ text, dateString, location, ...props }: Props) => (
+const Edit = ({
+  text,
+  dateString,
+  location,
+  disableActions,
+  theme,
+  themeVariant,
+  ...props
+}: Props) => (
   <Square>
     <WebView
+      pointerEvents={disableActions ? "none" : "auto"}
+      bounces={false}
+      scrollEnabled={false}
       onMessage={e => {
+        if (disableActions) return;
+
         const { data } = e.nativeEvent;
 
         if (!data) return;
@@ -45,7 +62,14 @@ const Edit = ({ text, dateString, location, ...props }: Props) => (
         }
       }}
       source={{
-        html: web({ text, dateString, location })
+        html: web({
+          text,
+          dateString,
+          location,
+          disableActions,
+          theme,
+          themeVariant
+        })
       }}
       style={{
         flex: 1

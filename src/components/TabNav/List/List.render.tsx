@@ -3,7 +3,12 @@ import { View } from "react-native";
 import ListItem from "../ListItem";
 
 interface Props {
-  items: Array<{ key: string; text: string; action: () => void }>;
+  items: Array<{
+    key: string;
+    text: string;
+    action: () => void;
+    active?: boolean;
+  }>;
 }
 
 /**

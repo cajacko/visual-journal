@@ -1,7 +1,7 @@
 const baseSize = "8vh";
 const sidePadding = "0.5rem;";
 
-module.exports = `
+module.exports = ({ themeProps: { color } }) => `
   html {
     font-size: ${baseSize};
     font-family: helvetica, sans-serif;
@@ -17,6 +17,7 @@ module.exports = `
     height: 100vh;
     width: 100vw;
     flex-direction: column;
+    overflow: hidden;
   }
 
   .Main {
@@ -34,7 +35,7 @@ module.exports = `
 
   .Footer {
     display: flex;
-    background-color: #0d47a1;
+    background-color: ${color};
   }
 
   .Location, .Date {

@@ -5,6 +5,7 @@ import { CameraRoll } from "react-native";
 import EditRender from "./Edit.render";
 import { API } from "../../config/urls";
 import TextArea from "../../components/Modal/TextArea";
+import { getDefaultTheme, getNextTheme } from "../../utils/getTheme";
 
 interface Props {}
 
@@ -25,6 +26,9 @@ interface State {
     onClose?: null | Func;
     initValue?: any;
   }>;
+  settingTheme: boolean;
+  theme: string;
+  themeVariant: string | null;
 }
 
 /**
@@ -33,6 +37,8 @@ interface State {
 class Edit extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
+
+    const { theme, variant } = getDefaultTheme();
 
     this.state = {
       text: "Yeah",
@@ -43,7 +49,10 @@ class Edit extends Component<Props, State> {
       ModalComponent: null,
       modalInitValue: null,
       onSubmitModal: null,
-      onCloseModal: null
+      onCloseModal: null,
+      settingTheme: false,
+      theme,
+      themeVariant: variant
     };
   }
 
@@ -110,6 +119,29 @@ class Edit extends Component<Props, State> {
     this.setState(newState);
   };
 
+  onPressTheme = () => {
+    this.setState({
+      settingTheme: !this.state.settingTheme
+    });
+  };
+
+  onChangeTheme = (direction: "up" | "down" | "left" | "right") => () => {
+    const { theme, variant } = getNextTheme(
+      this.state.theme,
+      this.state.themeVariant,
+      direction
+    );
+
+    if (theme === this.state.theme && variant === this.state.themeVariant) {
+      return;
+    }
+
+    this.setState({
+      theme,
+      themeVariant: variant
+    });
+  };
+
   render() {
     return (
       <EditRender
@@ -126,6 +158,11 @@ class Edit extends Component<Props, State> {
         onCloseModal={this.state.onCloseModal}
         ModalComponent={this.state.ModalComponent}
         modalInitValue={this.state.modalInitValue}
+        onPressTheme={this.onPressTheme}
+        settingTheme={this.state.settingTheme}
+        onChangeTheme={this.onChangeTheme}
+        theme={this.state.theme}
+        themeVariant={this.state.themeVariant}
       />
     );
   }

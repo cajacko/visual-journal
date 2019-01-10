@@ -6,6 +6,7 @@ import JournalEdit from "../../components/Journal/Edit";
 import Save from "../../components/Save";
 import Modal from "../../components/Modal/Container";
 import TabNav from "../../components/TabNav";
+import TwoWaySwiper from "../../components/TwoWaySwiper";
 
 type Func = () => void;
 type OnSubmitModal = (text: string) => void;
@@ -20,6 +21,7 @@ interface Props {
   onPressText: () => void;
   onPressDate: () => void;
   onPressLocation: () => void;
+  onPressTheme: () => void;
   onSubmitModal: OnSubmitModal;
   onCloseModal: Func;
   modalInitValue?: any;
@@ -28,6 +30,10 @@ interface Props {
     onClose: Func;
     initValue: any;
   }>;
+  settingTheme: boolean;
+  onChangeTheme: (key: string) => () => void;
+  theme: string;
+  themeVariant: string | null;
 }
 
 /**
@@ -47,21 +53,36 @@ const Edit = ({ ModalComponent, ...props }: Props) => (
       }
     >
       <View style={{ flex: 1 }}>
-        <JournalEdit
-          text={props.text}
-          location={props.location}
-          dateString={props.dateString}
-          onPressText={props.onPressText}
-          onPressLocation={props.onPressLocation}
-          onPressDate={props.onPressDate}
-        />
+        <TwoWaySwiper
+          onSwipeUp={props.onChangeTheme("up")}
+          onSwipeDown={props.onChangeTheme("down")}
+          onSwipeRight={props.onChangeTheme("right")}
+          onSwipeLeft={props.onChangeTheme("left")}
+        >
+          <JournalEdit
+            text={props.text}
+            location={props.location}
+            dateString={props.dateString}
+            onPressText={props.onPressText}
+            onPressLocation={props.onPressLocation}
+            onPressDate={props.onPressDate}
+            disableActions={props.settingTheme}
+            theme={props.theme}
+            themeVariant={props.themeVariant}
+          />
+        </TwoWaySwiper>
         <TabNav
           items={[
             { key: "text", text: "T", action: props.onPressText },
             { key: "date", text: "D", action: props.onPressDate },
             { key: "location", text: "L", action: props.onPressLocation },
             { key: "icons", text: "I", action: props.onPressLocation },
-            { key: "theme", text: "T", action: props.onPressLocation },
+            {
+              key: "theme",
+              text: "T",
+              action: props.onPressTheme,
+              active: props.settingTheme
+            },
             { key: "photos", text: "P", action: props.onPressLocation }
           ]}
         />
