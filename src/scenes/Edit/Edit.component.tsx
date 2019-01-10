@@ -57,7 +57,7 @@ class Edit extends Component<Props, State> {
   }
 
   onSave = () => {
-    const { text, location, dateString } = this.state;
+    const { text, location, dateString, theme, themeVariant } = this.state;
 
     this.setState({ saving: true, saveError: null });
 
@@ -69,7 +69,9 @@ class Edit extends Component<Props, State> {
       body: JSON.stringify({
         text,
         location,
-        date: dateString
+        date: dateString,
+        theme,
+        themeVariant
       })
     })
       .then(res => res.json())

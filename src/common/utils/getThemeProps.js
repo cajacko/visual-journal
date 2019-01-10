@@ -22,7 +22,7 @@ const getVariantProps = (variants, variantName) => {
 
   delete variant.key;
 
-  return { ...variantProps, ...variant };
+  return Object.assign({}, variantProps, variant);
 };
 
 const getThemeProps = (themeName, variantName) => {
@@ -42,11 +42,11 @@ const getThemeProps = (themeName, variantName) => {
   delete theme.key;
   delete theme.variants;
 
-  themeProps = { ...themeProps, ...theme };
+  themeProps = Object.assign({}, themeProps, theme);
 
   if (!hasVariants) return themeProps;
 
-  return { ...themeProps, ...getVariantProps(variants, variantName) };
+  return Object.assign({}, themeProps, getVariantProps(variants, variantName));
 };
 
 module.exports = getThemeProps;

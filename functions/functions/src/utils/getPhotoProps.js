@@ -1,5 +1,7 @@
-module.exports = ({ body: { text, location, date } }) => ({
+module.exports = ({ body: { text, location, date, theme, themeVariant } }) => ({
   text,
   location,
-  dateString: date
+  dateString: date,
+  theme,
+  themeVariant
 });
