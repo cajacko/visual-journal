@@ -52,7 +52,7 @@ const Edit = ({ ModalComponent, ...props }: Props) => (
           <ModalComponent
             onSubmit={props.onSubmitModal}
             onClose={props.onCloseModal}
-            initValue={props.modalInitValue}
+            {...props.modalProps}
           />
         )
       }

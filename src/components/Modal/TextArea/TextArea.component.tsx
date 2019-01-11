@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import TextArea from "./TextArea.render";
 
 interface Props {
-  initValue?: string | null;
+  value?: string | null;
+  placeholder?: string;
   onSubmit: (text: string) => void;
-  text: string;
   onChangeText: (text: string) => void;
 }
 
@@ -17,7 +17,7 @@ class TextAreaComponent extends Component<Props, State> {
     super(props);
 
     this.state = {
-      text: props.initValue || ""
+      text: props.value || ""
     };
   }
 
@@ -35,6 +35,7 @@ class TextAreaComponent extends Component<Props, State> {
         text={this.state.text}
         onSubmit={this.onSubmit}
         onChangeText={this.onChangeText}
+        placeholder={this.props.placeholder}
       />
     );
   }

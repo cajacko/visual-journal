@@ -6,6 +6,8 @@ import EditRender from "./Edit.render";
 import { API } from "../../config/urls";
 import TextArea from "../../components/Modal/TextArea";
 import { getDefaultTheme, getNextTheme } from "../../utils/getTheme";
+import { formatDate } from "../../utils/dates";
+import { TEXT, LOCATION } from "../../config/defaults";
 
 const { Bell } = require("../../common/config/icons");
 
@@ -20,7 +22,7 @@ interface State {
   dateString: string;
   saving: boolean;
   saveError: string | null;
-  modalInitValue: any;
+  modalProps: { [key: string]: any };
   onCloseModal: null | Func;
   onSubmitModal: null | OnSubmitModal;
   ModalComponent: null | React.SFC<{
@@ -44,13 +46,12 @@ class Edit extends Component<Props, State> {
     const { theme, variant } = getDefaultTheme();
 
     this.state = {
-      text: "Yeah",
-      location: "London",
-      dateString: "Mon 3rd Jun 2019",
+      text: TEXT,
+      location: LOCATION,
+      dateString: formatDate(new Date()),
       saving: false,
       saveError: null,
       ModalComponent: null,
-      modalInitValue: null,
       onSubmitModal: null,
       onCloseModal: null,
       settingTheme: false,
@@ -83,8 +84,8 @@ class Edit extends Component<Props, State> {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        text,
-        location,
+        text: text === TEXT ? null : text,
+        location: location === LOCATION ? null : location,
         date: dateString,
         theme,
         themeVariant,
@@ -105,9 +106,36 @@ class Edit extends Component<Props, State> {
   };
 
   setTextAreaModal = (stateKey: "text" | "dateString" | "location") => () => {
+    const modalProps: {
+      placeholder?: string | null;
+      value?: string | null;
+    } = {
+      placeholder: undefined,
+      value: undefined
+    };
+
+    const { dateString, text, location } = this.state;
+
+    switch (stateKey) {
+      case "text":
+        modalProps.placeholder = TEXT;
+        modalProps.value = text === TEXT ? undefined : text;
+        break;
+      case "dateString":
+        modalProps.placeholder = "Add a date";
+        modalProps.value = dateString;
+        break;
+      case "location":
+        modalProps.placeholder = "Add a location";
+        modalProps.value = location === LOCATION ? undefined : location;
+        break;
+      default:
+        break;
+    }
+
     const newState = {
       ModalComponent: TextArea,
-      modalInitValue: this.state[stateKey],
+      modalProps,
       onSubmitModal: (val: string) => this.resetModal({ [stateKey]: val }),
       onCloseModal: () => this.resetModal()
     };
@@ -128,9 +156,9 @@ class Edit extends Component<Props, State> {
   ) => {
     let newState = {
       ModalComponent: null,
-      modalInitValue: null,
       onSubmitModal: null,
-      onCloseModal: null
+      onCloseModal: null,
+      modalProps: {}
     };
 
     newState = { ...newState, ...additionalState };
@@ -177,12 +205,12 @@ class Edit extends Component<Props, State> {
         onSubmitModal={this.state.onSubmitModal}
         onCloseModal={this.state.onCloseModal}
         ModalComponent={this.state.ModalComponent}
-        modalInitValue={this.state.modalInitValue}
         onPressTheme={this.onPressTheme}
         settingTheme={this.state.settingTheme}
         onChangeTheme={this.onChangeTheme}
         theme={this.state.theme}
         themeVariant={this.state.themeVariant}
+        modalProps={this.state.modalProps}
       />
     );
   }

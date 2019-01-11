@@ -13,10 +13,11 @@ interface Props {
 /**
  * Modal text area
  */
-const TextArea = ({ text, onSubmit, onChangeText }: Props) => (
+const TextArea = ({ text, onSubmit, onChangeText, placeholder }: Props) => (
   <View style={{ flex: 1, padding: 20 }}>
     <View style={{ flex: 1 }}>
       <TextInput
+        placeholder={placeholder}
         style={{
           color: "white",
           fontSize: 20,
@@ -26,6 +27,7 @@ const TextArea = ({ text, onSubmit, onChangeText }: Props) => (
         autoFocus
         value={text}
         onChangeText={onChangeText}
+        placeholderTextColor="#E0E0E0"
       />
     </View>
     <View style={{ alignItems: "center", marginTop: 20 }}>
