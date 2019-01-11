@@ -7,6 +7,7 @@ import Save from "../../components/Save";
 import Modal from "../../components/Modal/Container";
 import TabNav from "../../components/TabNav";
 import TwoWaySwiper from "../../components/TwoWaySwiper";
+import FlashContent from "../../components/FlashContent";
 
 type Func = () => void;
 type OnSubmitModal = (text: string) => void;
@@ -37,6 +38,9 @@ interface Props {
   icons?: Array<string> | null;
 }
 
+const getThemeString = ({ theme, themeVariant }: Props) =>
+  `${theme}${themeVariant ? `: ${themeVariant}` : ""}`;
+
 /**
  * The edit journal scene
  */
@@ -53,7 +57,7 @@ const Edit = ({ ModalComponent, ...props }: Props) => (
         )
       }
     >
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, position: "relative" }}>
         <TwoWaySwiper
           onSwipeUp={props.onChangeTheme("up")}
           onSwipeDown={props.onChangeTheme("down")}
@@ -73,6 +77,34 @@ const Edit = ({ ModalComponent, ...props }: Props) => (
             theme={props.theme}
             themeVariant={props.themeVariant}
           />
+          <FlashContent controlProp={getThemeString(props)}>
+            <View
+              style={{
+                position: "absolute",
+                left: 0,
+                right: 0,
+                bottom: 0,
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: 70
+              }}
+            >
+              <View
+                style={{
+                  paddingVertical: 10,
+                  paddingHorizontal: 20,
+                  backgroundColor: "rgba('255, 255, 255, 0.75)",
+                  borderWidth: 1,
+                  borderColor: "#E0E0E0",
+                  borderRadius: 100,
+                  minWidth: 150,
+                  alignItems: "center"
+                }}
+              >
+                <Text>{getThemeString(props)}</Text>
+              </View>
+            </View>
+          </FlashContent>
         </TwoWaySwiper>
         <TabNav
           items={[

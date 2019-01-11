@@ -13,7 +13,7 @@ type SwipeFunc = () => void;
 
 interface Props {
   disable?: boolean;
-  children: JSX.Element;
+  children: JSX.Element | Array<JSX.Element>;
   onSwipeUp?: SwipeFunc;
   onSwipeDown?: SwipeFunc;
   onSwipeLeft?: SwipeFunc;
@@ -21,7 +21,12 @@ interface Props {
   includeArrowButtons?: boolean;
 }
 
-const Button = ({ text, action }) => (
+interface ButtonProps {
+  text: string;
+  action?: SwipeFunc;
+}
+
+const Button = ({ text, action }: ButtonProps) => (
   <TouchableOpacity
     onPress={action}
     style={{

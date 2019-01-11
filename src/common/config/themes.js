@@ -1,17 +1,17 @@
 module.exports = [
   {
-    key: "basic",
+    key: "Basic",
     variants: [
-      { key: "blue", color: "#0d47a1" },
-      { key: "green", color: "#388e3c" },
-      { key: "blue-gray", color: "#546e7a" },
-      { key: "deep-orange", color: "#d84315" },
-      { key: "amber", color: "#ff6f00" },
-      { key: "teal", color: "#00796b" },
-      { key: "cyan", color: "#00838f" },
-      { key: "deep-purple", color: "#512da8" },
-      { key: "pink", color: "#ad1457" },
-      { key: "red", color: "#c62828" }
+      { key: "Blue", color: "#0d47a1" },
+      { key: "Green", color: "#388e3c" },
+      { key: "Blue Gray", color: "#546e7a" },
+      { key: "Deep Orange", color: "#d84315" },
+      { key: "Amber", color: "#ff6f00" },
+      { key: "Teal", color: "#00796b" },
+      { key: "Cyan", color: "#00838f" },
+      { key: "Deep Purple", color: "#512da8" },
+      { key: "Pink", color: "#ad1457" },
+      { key: "Red", color: "#c62828" }
     ]
   }
 ];
