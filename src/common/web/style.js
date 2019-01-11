@@ -1,5 +1,6 @@
 const baseSize = "8vh";
 const sidePadding = "0.5rem;";
+const iconOffset = "1rem;";
 
 module.exports = ({ themeProps: { color } }) => `
   html {
@@ -23,14 +24,64 @@ module.exports = ({ themeProps: { color } }) => `
   .Main {
     display: flex;
     flex: 1;
+    overflow: hidden;
+  }
+
+  .TextArea {
+    display: flex;
+    flex: 1;
     align-items: center;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
   }
 
   .Text {
     padding: 1rem ${sidePadding};
     margin: 0;
     display: block;
+    position: relative;
+    z-index: 2;
+  }
+
+  .Icons {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+  }
+
+  .Icon {
+    position: absolute;
+    height: 2rem;
+    width: 2rem;
+    opacity: 0.1;
+  }
+
+  .Icon:nth-child(1) {
+    transform: rotate(-5deg);
+    top: ${iconOffset}
+    left: ${iconOffset}
+  }
+
+  .Icon:nth-child(2) {
+    transform: rotate(5deg);
+    bottom: ${iconOffset}
+    right: ${iconOffset}
+  }
+
+  .Icon:nth-child(3) {
+    transform: rotate(5deg);
+    top: ${iconOffset}
+    right: ${iconOffset}
+  }
+
+  .Icon:nth-child(4) {
+    transform: rotate(-5deg);
+    bottom: ${iconOffset}
+    left: ${iconOffset}
   }
 
   .Footer {

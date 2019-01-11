@@ -20,6 +20,7 @@ interface Props extends Funcs {
   disableActions?: boolean;
   theme: string;
   themeVariant: string | null;
+  icons?: Array<string> | null;
 }
 
 /**
@@ -32,6 +33,7 @@ const Edit = ({
   disableActions,
   theme,
   themeVariant,
+  icons,
   ...props
 }: Props) => (
   <Square>
@@ -68,7 +70,8 @@ const Edit = ({
           location,
           disableActions,
           theme,
-          themeVariant
+          themeVariant,
+          icons,
         })
       }}
       style={{

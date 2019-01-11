@@ -1,4 +1,6 @@
-module.exports = function(style, script, { text, location, dateString }) {
+const { bell } = require('../config/icons');
+
+module.exports = function(style, script, { text, location, dateString, icons }) {
   return `
     <html>
       <head>
@@ -11,7 +13,12 @@ module.exports = function(style, script, { text, location, dateString }) {
       </head>
       <body scroll="no">
         <main class="Main" onclick="window.onAction('onPressText')" >
+          <div class="TextArea">
             <p class="Text">${text}</p>
+            <div class="Icons">
+              ${icons && icons.length ? icons.reduce((acc, icon) => `${acc}<div class="Icon">${icon}</div>`, '') : ''}
+            </div>
+          </div>
         </main>
         <footer class="Footer">
           <span class="Location" onclick="window.onAction('onPressLocation')" >${location}</span>

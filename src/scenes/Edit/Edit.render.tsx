@@ -34,6 +34,7 @@ interface Props {
   onChangeTheme: (key: string) => () => void;
   theme: string;
   themeVariant: string | null;
+  icons?: Array<string> | null;
 }
 
 /**
@@ -61,6 +62,7 @@ const Edit = ({ ModalComponent, ...props }: Props) => (
           includeArrowButtons={props.settingTheme}
         >
           <JournalEdit
+            icons={props.icons}
             text={props.text}
             location={props.location}
             dateString={props.dateString}

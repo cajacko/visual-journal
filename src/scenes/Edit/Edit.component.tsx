@@ -7,6 +7,8 @@ import { API } from "../../config/urls";
 import TextArea from "../../components/Modal/TextArea";
 import { getDefaultTheme, getNextTheme } from "../../utils/getTheme";
 
+const { Bell } = require("../../common/config/icons");
+
 interface Props {}
 
 type Func = () => void;
@@ -29,6 +31,7 @@ interface State {
   settingTheme: boolean;
   theme: string;
   themeVariant: string | null;
+  icons: Array<{ key: string; content: string }>;
 }
 
 /**
@@ -52,12 +55,25 @@ class Edit extends Component<Props, State> {
       onCloseModal: null,
       settingTheme: false,
       theme,
-      themeVariant: variant
+      themeVariant: variant,
+      icons: [
+        { key: "Bell", content: Bell },
+        { key: "Bell", content: Bell },
+        { key: "Bell", content: Bell },
+        { key: "Bell", content: Bell }
+      ]
     };
   }
 
   onSave = () => {
-    const { text, location, dateString, theme, themeVariant } = this.state;
+    const {
+      text,
+      location,
+      dateString,
+      theme,
+      themeVariant,
+      icons
+    } = this.state;
 
     this.setState({ saving: true, saveError: null });
 
@@ -71,7 +87,8 @@ class Edit extends Component<Props, State> {
         location,
         date: dateString,
         theme,
-        themeVariant
+        themeVariant,
+        icons: icons.map(({ key }) => key)
       })
     })
       .then(res => res.json())
@@ -147,6 +164,7 @@ class Edit extends Component<Props, State> {
   render() {
     return (
       <EditRender
+        icons={this.state.icons.map(({ content }) => content)}
         text={this.state.text}
         location={this.state.location}
         dateString={this.state.dateString}
