@@ -8,6 +8,7 @@ import TextArea from "../../components/Modal/TextArea";
 import { getDefaultTheme, getNextTheme } from "../../utils/getTheme";
 import { formatDate } from "../../utils/dates";
 import { TEXT, LOCATION } from "../../config/defaults";
+import Icons from "../../components/Modal/Icons";
 
 const { Bell } = require("../../common/config/icons");
 
@@ -147,6 +148,17 @@ class Edit extends Component<Props, State> {
   onPressDate = this.setTextAreaModal("dateString");
   onPressLocation = this.setTextAreaModal("location");
 
+  onPressIcons = () => {
+    const newState = {
+      ModalComponent: Icons,
+      modalProps: {},
+      onSubmitModal: val => console.log("onSubmitModal", val),
+      onCloseModal: () => this.resetModal()
+    };
+
+    this.setState(newState);
+  };
+
   resetModal = (
     additionalState: {
       text?: string;
@@ -211,6 +223,7 @@ class Edit extends Component<Props, State> {
         theme={this.state.theme}
         themeVariant={this.state.themeVariant}
         modalProps={this.state.modalProps}
+        onPressIcons={this.onPressIcons}
       />
     );
   }

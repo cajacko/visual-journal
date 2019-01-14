@@ -23,6 +23,7 @@ interface Props {
   onPressDate: () => void;
   onPressLocation: () => void;
   onPressTheme: () => void;
+  onPressIcons: () => void;
   onSubmitModal: OnSubmitModal;
   onCloseModal: Func;
   modalInitValue?: any;
@@ -111,7 +112,7 @@ const Edit = ({ ModalComponent, ...props }: Props) => (
             { key: "text", text: "T", action: props.onPressText },
             { key: "date", text: "D", action: props.onPressDate },
             { key: "location", text: "L", action: props.onPressLocation },
-            { key: "icons", text: "I", action: props.onPressLocation },
+            { key: "icons", text: "I", action: props.onPressIcons },
             {
               key: "theme",
               text: "T",
